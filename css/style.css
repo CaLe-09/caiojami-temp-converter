@@ -2,12 +2,19 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .conversor-container {
     background-color: white;
     padding: 20px;
     max-width: 400px;
+    width: 100%;
+    border: 1px solid #ccc;
 }
 
 .input-grupo, .seletores-grupo {
@@ -17,4 +24,5 @@ body {
 button {
     padding: 10px;
     cursor: pointer;
+    width: 100%;
 }
