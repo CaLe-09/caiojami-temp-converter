@@ -152,7 +152,7 @@ button:hover {
 }
 
 .sucesso {
-    color: #16a34a !important;
+    color: hsl(224, 76%, 51%) !important;
 }
 
 .erro {
