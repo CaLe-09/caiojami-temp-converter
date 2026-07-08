@@ -10,6 +10,10 @@ const botaoInverter = document.getElementById("botao-inverter");
 const resultadoTexto = document.getElementById("resultado-texto");
 const mensagemErro = document.getElementById("mensagem-erro");
 
+const historicoLista = document.getElementById("historico-lista");
+
+let historico = [];
+
 // Função principal de conversão
 function converterTemperatura() {
 
@@ -101,6 +105,25 @@ function converterTemperatura() {
     resultadoTexto.classList.add("sucesso");
     resultadoTexto.classList.add("animacao-resultado");
 
+    // Histórico das conversões
+    const registro = `${valor} °${origem} ➜ ${resultado.toFixed(2)} °${destino}`;
+
+    historico.unshift(registro);
+
+    if (historico.length > 5) {
+        historico.pop();
+    }
+
+    historicoLista.innerHTML = "";
+
+    historico.forEach(item => {
+
+        const li = document.createElement("li");
+        li.textContent = item;
+        historicoLista.appendChild(li);
+
+    });
+
 }
 
 // Limpar formulário
@@ -119,6 +142,12 @@ function limparCampos() {
     resultadoTexto.classList.remove("animacao-resultado");
 
     inputTemperatura.classList.remove("erro");
+
+    // Limpa histórico
+    historico = [];
+
+    historicoLista.innerHTML =
+        "<li>Nenhuma conversão realizada.</li>";
 
     inputTemperatura.focus();
 
@@ -142,6 +171,7 @@ function verificarUnidades() {
 
 }
 
+// Inverte as unidades
 function inverterUnidades() {
 
     const origem = unidadeDe.value;
@@ -167,7 +197,6 @@ unidadeDe.addEventListener("change", verificarUnidades);
 unidadePara.addEventListener("change", verificarUnidades);
 
 // Permite converter pressionando Enter
-
 inputTemperatura.addEventListener("keypress", function (event) {
 
     if (event.key === "Enter") {
@@ -179,7 +208,6 @@ inputTemperatura.addEventListener("keypress", function (event) {
 });
 
 // Remove o erro enquanto o usuário digita
-
 inputTemperatura.addEventListener("input", function () {
 
     mensagemErro.textContent = "";

@@ -243,3 +243,34 @@ button:hover {
     }
 
 }
+
+/* Histórico */
+
+.historico-container{
+    margin-top:25px;
+    background:#f8fafc;
+    padding:20px;
+    border-radius:12px;
+}
+
+.historico-container h2{
+    color:#1e3a8a;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+#historico-lista{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+#historico-lista li{
+    background:white;
+    padding:10px 15px;
+    border-left:5px solid #2563eb;
+    border-radius:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    word-break:break-word;
+}
