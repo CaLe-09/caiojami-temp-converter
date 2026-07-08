@@ -9,36 +9,54 @@ const botaoLimpar = document.getElementById("botao-limpar");
 const resultadoTexto = document.getElementById("resultado-texto");
 const mensagemErro = document.getElementById("mensagem-erro");
 
-// Converter temperatura
+// Função principal de conversão
 function converterTemperatura() {
 
     mensagemErro.textContent = "";
-    resultadoTexto.textContent = "O resultado aparecerá aqui.";
+    resultadoTexto.classList.remove("animacao-resultado");
+    resultadoTexto.classList.remove("sucesso");
+    inputTemperatura.classList.remove("erro");
 
     const valor = parseFloat(inputTemperatura.value);
 
     if (inputTemperatura.value.trim() === "") {
+
         mensagemErro.textContent = "Digite uma temperatura.";
+        inputTemperatura.classList.add("erro");
         return;
+
     }
 
     if (isNaN(valor)) {
+
         mensagemErro.textContent = "Digite um valor válido.";
+        inputTemperatura.classList.add("erro");
         return;
+
     }
 
     const origem = unidadeDe.value;
     const destino = unidadePara.value;
 
-    // Kelvin não pode ser negativo
-    if (origem === "K" && valor < 0) {
-        mensagemErro.textContent = "A temperatura em Kelvin não pode ser negativa.";
+    if (origem === destino) {
+
+        mensagemErro.textContent = "Escolha unidades diferentes.";
         return;
+
+    }
+
+    if (origem === "K" && valor < 0) {
+
+        mensagemErro.textContent =
+            "A temperatura em Kelvin não pode ser negativa.";
+
+        inputTemperatura.classList.add("erro");
+        return;
+
     }
 
     let celsius;
 
-    // Converter para Celsius
     switch (origem) {
 
         case "C":
@@ -52,11 +70,11 @@ function converterTemperatura() {
         case "K":
             celsius = valor - 273.15;
             break;
+
     }
 
     let resultado;
 
-    // Converter de Celsius para destino
     switch (destino) {
 
         case "C":
@@ -70,45 +88,42 @@ function converterTemperatura() {
         case "K":
             resultado = celsius + 273.15;
             break;
+
     }
 
-    resultadoTexto.textContent =
-        `${valor} °${origem} = ${resultado.toFixed(2)} °${destino}`;
+    resultadoTexto.innerHTML = `
+        🌡️ <strong>${valor} °${origem}</strong><br>
+        ⬇️<br>
+        <strong>${resultado.toFixed(2)} °${destino}</strong>
+    `;
+
+    resultadoTexto.classList.add("sucesso");
+    resultadoTexto.classList.add("animacao-resultado");
+
 }
 
 // Limpar formulário
 function limparCampos() {
 
     inputTemperatura.value = "";
-    unidadeDe.selectedIndex = 0;
-    unidadePara.selectedIndex = 0;
+
+    unidadeDe.value = "C";
+    unidadePara.value = "F";
 
     resultadoTexto.textContent = "O resultado aparecerá aqui.";
+
     mensagemErro.textContent = "";
+
+    resultadoTexto.classList.remove("sucesso");
+    resultadoTexto.classList.remove("animacao-resultado");
+
+    inputTemperatura.classList.remove("erro");
 
     inputTemperatura.focus();
 
 }
 
-// Converter clicando no botão
-botaoConverter.addEventListener("click", converterTemperatura);
-
-// Limpar
-botaoLimpar.addEventListener("click", limparCampos);
-
-// Enter converte automaticamente
-inputTemperatura.addEventListener("keypress", function (event) {
-
-    if (event.key === "Enter") {
-        converterTemperatura();
-    }
-
-});
-
-// Impede escolher a mesma unidade
-unidadeDe.addEventListener("change", verificarUnidades);
-unidadePara.addEventListener("change", verificarUnidades);
-
+// Verifica se as unidades são diferentes
 function verificarUnidades() {
 
     if (unidadeDe.value === unidadePara.value) {
@@ -125,3 +140,34 @@ function verificarUnidades() {
     }
 
 }
+
+// Eventos
+
+botaoConverter.addEventListener("click", converterTemperatura);
+
+botaoLimpar.addEventListener("click", limparCampos);
+
+unidadeDe.addEventListener("change", verificarUnidades);
+
+unidadePara.addEventListener("change", verificarUnidades);
+
+// Permite converter pressionando Enter
+
+inputTemperatura.addEventListener("keypress", function (event) {
+
+    if (event.key === "Enter") {
+
+        converterTemperatura();
+
+    }
+
+});
+
+// Remove o erro enquanto o usuário digita
+
+inputTemperatura.addEventListener("input", function () {
+
+    mensagemErro.textContent = "";
+    inputTemperatura.classList.remove("erro");
+
+});
