@@ -5,6 +5,7 @@ const unidadePara = document.getElementById("unidade-para");
 
 const botaoConverter = document.getElementById("botao-converter");
 const botaoLimpar = document.getElementById("botao-limpar");
+const botaoInverter = document.getElementById("botao-inverter");
 
 const resultadoTexto = document.getElementById("resultado-texto");
 const mensagemErro = document.getElementById("mensagem-erro");
@@ -141,9 +142,23 @@ function verificarUnidades() {
 
 }
 
+function inverterUnidades() {
+
+    const origem = unidadeDe.value;
+    const destino = unidadePara.value;
+
+    unidadeDe.value = destino;
+    unidadePara.value = origem;
+
+    mensagemErro.textContent = "";
+
+}
+
 // Eventos
 
 botaoConverter.addEventListener("click", converterTemperatura);
+
+botaoInverter.addEventListener("click", inverterUnidades);
 
 botaoLimpar.addEventListener("click", limparCampos);
 

@@ -198,3 +198,13 @@ button {
     }
 
 }
+
+#botao-inverter{
+    background: #0ea5e9;
+    color: white;
+}
+
+#botao-inverter:hover{
+    background: #0284c7;
+    transform: translateY(-2px);
+}
