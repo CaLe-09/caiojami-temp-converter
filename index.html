@@ -1,44 +1,155 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Conversor de Temperatura</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="css/style.css">
+
 </head>
+
 <body>
-<main class="conversor-container">
-        <h1>Conversor de Temperatura</h1>
-        
-        <div class="input-grupo">
-            <label for="valor-temperatura">Digite a temperatura:</label>
-            <input type="number" id="valor-temperatura" placeholder="Ex: 25">
-        </div>
-        <div class="seletores-grupo">
+
+    <main class="conversor-container">
+
+        <!-- Cabeçalho -->
+
+        <header class="cabecalho">
+
+            <h1>Conversor de Temperatura</h1>
+
+            <p>
+                Converta temperaturas entre Celsius, Fahrenheit e Kelvin
+                de forma rápida e precisa.
+            </p>
+
+        </header>
+
+        <!-- Entrada -->
+
+        <section class="entrada">
+
+            <div class="input-grupo">
+
+                <label for="valor-temperatura">
+                    Temperatura
+                </label>
+
+                <input
+                    type="number"
+                    id="valor-temperatura"
+                    placeholder="Digite um valor">
+
+            </div>
+
+        </section>
+
+        <!-- Conversões -->
+
+        <section class="seletores-grupo">
+
             <div class="campo">
-                <label for="unidade-de">De:</label>
+
+                <label for="unidade-de">
+                    Converter de
+                </label>
+
                 <select id="unidade-de">
+
                     <option value="C">Celsius (°C)</option>
                     <option value="F">Fahrenheit (°F)</option>
                     <option value="K">Kelvin (K)</option>
+
                 </select>
+
             </div>
 
             <div class="campo">
-                <label for="unidade-para">Para:</label>
+
+                <label for="unidade-para">
+                    Converter para
+                </label>
+
                 <select id="unidade-para">
+
                     <option value="F">Fahrenheit (°F)</option>
                     <option value="C">Celsius (°C)</option>
                     <option value="K">Kelvin (K)</option>
-                </select>
-            </div>
-        </div>
-        <button id="botao-converter">Converter</button>
 
-        <div id="resultado-container">
-            <p id="resultado-texto">O resultado aparecerá aqui...</p>
-        </div>
+                </select>
+
+            </div>
+
+        </section>
+
+        <!-- Botões -->
+
+        <section class="acoes">
+
+            <button id="botao-converter">
+                Converter
+            </button>
+
+            <button id="botao-inverter" type="button">
+                🔄 Inverter
+            </button>
+
+            <button id="botao-limpar" type="button">
+                Limpar
+            </button>
+
+        </section>
+
+        <!-- Resultado -->
+
+        <section class="resultado-container">
+
+            <!-- Aqui aparecerá a animação -->
+
+           <div id="animacao-temperatura" style="width:180px;height:180px;margin:0 auto 20px;"></div>
+
+            <h2>Resultado</h2>
+
+            <p id="resultado-texto">
+                O resultado aparecerá aqui.
+            </p>
+
+            <small id="mensagem-erro"></small>
+
+        </section>
+
+        <!-- Histórico -->
+
+        <section class="historico-container">
+
+            <h2>Histórico das Conversões</h2>
+
+            <ul id="historico-lista">
+
+                <li>Nenhuma conversão realizada.</li>
+
+            </ul>
+
+        </section>
+
     </main>
+
+    <!-- Biblioteca oficial do Lottie -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+
     <script src="js/script.js"></script>
+
 </body>
+
 </html>
