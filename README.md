@@ -76,6 +76,17 @@ Melhorias implementadas:
 
 ---
 
+## 🚀 Versão 3.0
+
+Nesta versão, o foco foi trazer recursos avançados de acessibilidade, utilidade e conveniência para o usuário.
+
+Melhorias implementadas:
+
+- Alternância completa de cores do sistema para tons escuros, reduzindo a fadiga visual.
+- O sistema utiliza "localStorage" para lembrar se o usuário prefere o modo claro ou escuro, mesmo após fechar o navegador.
+- Adicionado um recurso rápido para copiar a temperatura final formatada para a área de transferência com apenas um clique.
+
+---
 ## 📱 Responsividade
 
 O sistema adapta automaticamente seu layout para computadores, tablets e smartphones.
