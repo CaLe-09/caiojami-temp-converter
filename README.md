@@ -12,6 +12,7 @@ O sistema permite realizar conversões entre as escalas Celsius (°C), Fahrenhei
 |------|--------|
 | Caio Lelys Queiroz Pereira | @CaLe-09 |
 | Jamiryan de Lima Calisto | @Jamiryan |
+| Kayane Barbosa Araújo | @bkayane89 |
 
 ---
 

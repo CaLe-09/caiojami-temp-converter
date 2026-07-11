@@ -9,6 +9,7 @@ const unidadePara = document.getElementById("unidade-para");
 const botaoConverter = document.getElementById("botao-converter");
 const botaoLimpar = document.getElementById("botao-limpar");
 const botaoInverter = document.getElementById("botao-inverter");
+const botaoDarkMode = document.getElementById("botao-dark-mode");
 
 const resultadoTexto = document.getElementById("resultado-texto");
 const mensagemErro = document.getElementById("mensagem-erro");
@@ -289,4 +290,27 @@ inputTemperatura.addEventListener("input",function(){
 
     inputTemperatura.classList.remove("erro");
 
+});
+
+// ================================
+// Modo Escuro
+// ================================
+// Verifica se o usuário já tinha uma preferência salva no navegador
+if (localStorage.getItem("tema") === "dark") {
+    document.body.classList.add("dark-mode");
+    botaoDarkMode.textContent = "☀️ Modo Claro";
+}
+
+// Evento de clique para alternar o tema
+botaoDarkMode.addEventListener("click", function() {
+    document.body.classList.toggle("dark-mode");
+    
+    // Atualiza o texto do botão e salva a escolha no localStorage
+    if (document.body.classList.contains("dark-mode")) {
+        botaoDarkMode.textContent = "☀️ Modo Claro";
+        localStorage.setItem("tema", "dark");
+    } else {
+        botaoDarkMode.textContent = "🌓 Modo Escuro";
+        localStorage.setItem("tema", "light");
+    }
 });
