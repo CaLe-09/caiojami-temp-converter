@@ -107,7 +107,7 @@ O sistema adapta automaticamente seu layout para computadores, tablets e smartph
 
 ### Versão 3.0
 
-<img src="imagens/Versao3.0.jpeg" width="700">
+<img src="imagens/Versao3.0.png" width="700">
 ---
 
 ## ▶️ Como executar
