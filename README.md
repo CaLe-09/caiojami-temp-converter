@@ -8,11 +8,12 @@ O sistema permite realizar conversões entre as escalas Celsius (°C), Fahrenhei
 
 ## 👥 Integrantes
 
-| Nome | GitHub |
-|------|--------|
-| Caio Lelys Queiroz Pereira | @CaLe-09 |
-| Jamiryan de Lima Calisto | @Jamiryan |
-| Kayane Barbosa Araújo | @bkayane89 |
+| Nome                        | GitHub            |
+| --------------------------- | ----------------- |
+| Caio Lelys Queiroz Pereira  | @CaLe-09          |
+| Jamiryan de Lima Calisto    | @Jamiryan         |
+| Kayane Barbosa Araújo       | @bkayane89        |
+| David Beckham Paulo Marinho | @DavidMarinho2203 |
 
 ---
 
@@ -87,6 +88,7 @@ Melhorias implementadas:
 - Adicionado um recurso rápido para copiar a temperatura final formatada para a área de transferência com apenas um clique.
 
 ---
+
 ## 📱 Responsividade
 
 O sistema adapta automaticamente seu layout para computadores, tablets e smartphones.
@@ -107,8 +109,7 @@ O sistema adapta automaticamente seu layout para computadores, tablets e smartph
 
 ### Versão 3.0
 
-<img src="imagens/Versao3.0.png" width="700">
----
+## <img src="imagens/versao3.png" width="700">
 
 ## ▶️ Como executar
 
