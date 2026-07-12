@@ -2,6 +2,7 @@
 // Elementos da página
 // ================================
 
+const botaoCopiar = document.getElementById("botao-copiar");
 const inputTemperatura = document.getElementById("valor-temperatura");
 const unidadeDe = document.getElementById("unidade-de");
 const unidadePara = document.getElementById("unidade-para");
@@ -27,23 +28,17 @@ let animacao;
 // ================================
 
 function carregarAnimacao(arquivo) {
+  if (animacao) {
+    animacao.destroy();
+  }
 
-    if (animacao) {
-
-        animacao.destroy();
-
-    }
-
-    animacao = lottie.loadAnimation({
-
-        container: animacaoContainer,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        path: arquivo
-
-    });
-
+  animacao = lottie.loadAnimation({
+    container: animacaoContainer,
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    path: arquivo,
+  });
 }
 
 // animação inicial
@@ -52,123 +47,98 @@ carregarAnimacao("assets/animations/ameno.json");
 
 // ================================
 
-function atualizarAnimacao(celsius){
-
-    if(celsius < 10){
-
-        carregarAnimacao("assets/animations/frio.json");
-
-    }
-
-    else if(celsius > 30){
-
-        carregarAnimacao("assets/animations/calor.json");
-
-    }
-
-    else{
-
-        carregarAnimacao("assets/animations/ameno.json");
-
-    }
-
+function atualizarAnimacao(celsius) {
+  if (celsius < 10) {
+    carregarAnimacao("assets/animations/frio.json");
+  } else if (celsius > 30) {
+    carregarAnimacao("assets/animations/calor.json");
+  } else {
+    carregarAnimacao("assets/animations/ameno.json");
+  }
 }
 
 // ================================
 // Conversão
 // ================================
 
-function converterTemperatura(){
+function converterTemperatura() {
+  mensagemErro.textContent = "";
 
-    mensagemErro.textContent="";
+  resultadoTexto.classList.remove("animacao-resultado");
+  resultadoTexto.classList.remove("sucesso");
 
-    resultadoTexto.classList.remove("animacao-resultado");
-    resultadoTexto.classList.remove("sucesso");
+  inputTemperatura.classList.remove("erro");
 
-    inputTemperatura.classList.remove("erro");
+  const valor = parseFloat(inputTemperatura.value);
 
-    const valor = parseFloat(inputTemperatura.value);
+  if (inputTemperatura.value.trim() === "") {
+    mensagemErro.textContent = "Digite uma temperatura.";
 
-    if(inputTemperatura.value.trim()===""){
+    inputTemperatura.classList.add("erro");
 
-        mensagemErro.textContent="Digite uma temperatura.";
+    return;
+  }
 
-        inputTemperatura.classList.add("erro");
+  if (isNaN(valor)) {
+    mensagemErro.textContent = "Digite um valor válido.";
 
-        return;
+    inputTemperatura.classList.add("erro");
 
-    }
+    return;
+  }
 
-    if(isNaN(valor)){
+  const origem = unidadeDe.value;
+  const destino = unidadePara.value;
 
-        mensagemErro.textContent="Digite um valor válido.";
+  if (origem === destino) {
+    mensagemErro.textContent = "Escolha unidades diferentes.";
 
-        inputTemperatura.classList.add("erro");
+    return;
+  }
 
-        return;
+  if (origem === "K" && valor < 0) {
+    mensagemErro.textContent = "Kelvin não pode ser negativo.";
 
-    }
+    inputTemperatura.classList.add("erro");
 
-    const origem = unidadeDe.value;
-    const destino = unidadePara.value;
+    return;
+  }
 
-    if(origem===destino){
+  let celsius;
 
-        mensagemErro.textContent="Escolha unidades diferentes.";
+  switch (origem) {
+    case "C":
+      celsius = valor;
+      break;
 
-        return;
+    case "F":
+      celsius = ((valor - 32) * 5) / 9;
+      break;
 
-    }
+    case "K":
+      celsius = valor - 273.15;
+      break;
+  }
 
-    if(origem==="K" && valor<0){
+  let resultado;
 
-        mensagemErro.textContent="Kelvin não pode ser negativo.";
+  switch (destino) {
+    case "C":
+      resultado = celsius;
+      break;
 
-        inputTemperatura.classList.add("erro");
+    case "F":
+      resultado = (celsius * 9) / 5 + 32;
+      break;
 
-        return;
+    case "K":
+      resultado = celsius + 273.15;
+      break;
+  }
 
-    }
+  atualizarAnimacao(celsius);
 
-    let celsius;
-
-    switch(origem){
-
-        case "C":
-            celsius=valor;
-            break;
-
-        case "F":
-            celsius=(valor-32)*5/9;
-            break;
-
-        case "K":
-            celsius=valor-273.15;
-            break;
-
-    }
-
-    let resultado;
-
-    switch(destino){
-
-        case "C":
-            resultado=celsius;
-            break;
-
-        case "F":
-            resultado=(celsius*9/5)+32;
-            break;
-
-        case "K":
-            resultado=celsius+273.15;
-            break;
-
-    }
-
-    atualizarAnimacao(celsius);
-
-    resultadoTexto.innerHTML=`
+  resultadoTexto.innerHTML = `
         <strong>${valor} °${origem}</strong>
         <br><br>
         ⬇
@@ -176,120 +146,101 @@ function converterTemperatura(){
         <strong>${resultado.toFixed(2)} °${destino}</strong>
     `;
 
-    resultadoTexto.classList.add("sucesso");
-    resultadoTexto.classList.add("animacao-resultado");
+  resultadoTexto.classList.add("sucesso");
+  resultadoTexto.classList.add("animacao-resultado");
 
-    // Histórico
+  // Histórico
 
-    historico.unshift(
-        `${valor} °${origem} ➜ ${resultado.toFixed(2)} °${destino}`
-    );
+  historico.unshift(
+    `${valor} °${origem} ➜ ${resultado.toFixed(2)} °${destino}`,
+  );
 
-    if(historico.length>5){
+  if (historico.length > 5) {
+    historico.pop();
+  }
 
-        historico.pop();
+  historicoLista.innerHTML = "";
 
-    }
+  historico.forEach((item) => {
+    const li = document.createElement("li");
 
-    historicoLista.innerHTML="";
+    li.textContent = item;
 
-    historico.forEach(item=>{
+    historicoLista.appendChild(li);
+  });
 
-        const li=document.createElement("li");
-
-        li.textContent=item;
-
-        historicoLista.appendChild(li);
-
-    });
-
+  botaoCopiar.style.display = "block";
+  botaoCopiar.textContent = "📋 Copiar Resultado";
 }
 
 // ================================
 
-function limparCampos(){
+function limparCampos() {
+  inputTemperatura.value = "";
+  botaoCopiar.style.display = "none";
 
-    inputTemperatura.value="";
+  unidadeDe.value = "C";
+  unidadePara.value = "F";
 
-    unidadeDe.value="C";
-    unidadePara.value="F";
+  resultadoTexto.textContent = "O resultado aparecerá aqui.";
 
-    resultadoTexto.textContent="O resultado aparecerá aqui.";
+  mensagemErro.textContent = "";
 
-    mensagemErro.textContent="";
+  historico = [];
 
-    historico=[];
+  historicoLista.innerHTML = "<li>Nenhuma conversão realizada.</li>";
 
-    historicoLista.innerHTML="<li>Nenhuma conversão realizada.</li>";
+  carregarAnimacao("assets/animations/ameno.json");
 
-    carregarAnimacao("assets/animations/ameno.json");
+  inputTemperatura.classList.remove("erro");
 
-    inputTemperatura.classList.remove("erro");
-
-    inputTemperatura.focus();
-
+  inputTemperatura.focus();
 }
 
 // ================================
 
-function inverterUnidades(){
+function inverterUnidades() {
+  const origem = unidadeDe.value;
 
-    const origem=unidadeDe.value;
+  unidadeDe.value = unidadePara.value;
 
-    unidadeDe.value=unidadePara.value;
-
-    unidadePara.value=origem;
-
+  unidadePara.value = origem;
 }
 
 // ================================
 
-function verificarUnidades(){
-
-    if(unidadeDe.value===unidadePara.value){
-
-        mensagemErro.textContent="Escolha unidades diferentes.";
-
-    }
-
-    else{
-
-        mensagemErro.textContent="";
-
-    }
-
+function verificarUnidades() {
+  if (unidadeDe.value === unidadePara.value) {
+    mensagemErro.textContent = "Escolha unidades diferentes.";
+  } else {
+    mensagemErro.textContent = "";
+  }
 }
 
 // ================================
 // Eventos
 // ================================
 
-botaoConverter.addEventListener("click",converterTemperatura);
+botaoConverter.addEventListener("click", converterTemperatura);
 
-botaoLimpar.addEventListener("click",limparCampos);
+botaoLimpar.addEventListener("click", limparCampos);
 
-botaoInverter.addEventListener("click",inverterUnidades);
+botaoInverter.addEventListener("click", inverterUnidades);
 
-unidadeDe.addEventListener("change",verificarUnidades);
+unidadeDe.addEventListener("change", verificarUnidades);
 
-unidadePara.addEventListener("change",verificarUnidades);
+unidadePara.addEventListener("change", verificarUnidades);
 
-inputTemperatura.addEventListener("keypress",function(event){
-
-    if(event.key==="Enter"){
-
-        converterTemperatura();
-
-    }
-
+inputTemperatura.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    converterTemperatura();
+  }
 });
 
-inputTemperatura.addEventListener("input",function(){
+inputTemperatura.addEventListener("input", function () {
+  mensagemErro.textContent = "";
 
-    mensagemErro.textContent="";
-
-    inputTemperatura.classList.remove("erro");
-
+  inputTemperatura.classList.remove("erro");
 });
 
 // ================================
@@ -297,20 +248,31 @@ inputTemperatura.addEventListener("input",function(){
 // ================================
 // Verifica se o usuário já tinha uma preferência salva no navegador
 if (localStorage.getItem("tema") === "dark") {
-    document.body.classList.add("dark-mode");
-    botaoDarkMode.textContent = "☀️ Modo Claro";
+  document.body.classList.add("dark-mode");
+  botaoDarkMode.textContent = "☀️ Modo Claro";
 }
 
 // Evento de clique para alternar o tema
-botaoDarkMode.addEventListener("click", function() {
-    document.body.classList.toggle("dark-mode");
-    
-    // Atualiza o texto do botão e salva a escolha no localStorage
-    if (document.body.classList.contains("dark-mode")) {
-        botaoDarkMode.textContent = "☀️ Modo Claro";
-        localStorage.setItem("tema", "dark");
-    } else {
-        botaoDarkMode.textContent = "🌓 Modo Escuro";
-        localStorage.setItem("tema", "light");
-    }
+botaoDarkMode.addEventListener("click", function () {
+  document.body.classList.toggle("dark-mode");
+
+  // Atualiza o texto do botão e salva a escolha no localStorage
+  if (document.body.classList.contains("dark-mode")) {
+    botaoDarkMode.textContent = "☀️ Modo Claro";
+    localStorage.setItem("tema", "dark");
+  } else {
+    botaoDarkMode.textContent = "🌓 Modo Escuro";
+    localStorage.setItem("tema", "light");
+  }
+});
+
+botaoCopiar.addEventListener("click", function () {
+  // Pega o texto limpo do resultado (removendo as quebras de linha e a seta)
+  const textoAnalisado = resultadoTexto.innerText.replace(/\n+/g, " ");
+  navigator.clipboard.writeText(textoAnalisado).then(() => {
+    botaoCopiar.textContent = "✅ Copiado!";
+    setTimeout(() => {
+      botaoCopiar.textContent = "📋 Copiar Resultado";
+    }, 2000);
+  });
 });
